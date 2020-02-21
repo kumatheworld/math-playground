@@ -1,2 +1,2 @@
 # math-playground
- Random math functions
+ Random Math Functions
