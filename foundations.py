@@ -1,19 +1,19 @@
 from itertools import chain, combinations
 
 def powerset(g):
-    """Powerset"""
+    """Returns the powerset of g"""
     s = list(g)
     return chain.from_iterable(combinations(s, r) for r in range(len(s)+1))
 
-def R(alpha):
-    """Well founded set that constitutes HF"""
-    if alpha == 0:
+def R(n):
+    """Returns the set of well-founded sets of rank < n"""
+    if n == 0:
         return iter(())
     else:
-        return powerset(R(alpha-1))
+        return powerset(R(n-1))
 
 def hotbits(m):
-    """Places in which there's 1 in binary representation of input"""
+    """Returns the places in which there's 1 in the binary representation of m"""
     i = 0
     while m:
         if m & 1:
@@ -22,7 +22,7 @@ def hotbits(m):
         m >>= 1
 
 def omega2hf(m):
-    """Natural bijection from N to HF"""
+    """Returns the image of m by the natural bijection from N to HF"""
     if m == 0:
         return iter(())
     else:
@@ -30,7 +30,7 @@ def omega2hf(m):
             yield omega2hf(n)
 
 def tuplify_nested_generator(g):
-    """Recursive tuplification"""
+    """Tuplify g Recursively"""
     return tuple(
         tuplify_nested_generator(gg)
         for gg in g
