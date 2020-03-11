@@ -36,11 +36,22 @@ def tuplify_nested_generator(g):
         for gg in g
     )
 
+def simplify(x):
+    """Simplify a set of well-founded sets x"""
+    if isinstance(x, int):
+        return x
+
+    n = len(x)
+    y = tuple(simplify(y) for y in x)
+    if set(y) == set(range(n)):
+        return n
+    return y
+
 def test():
     print(tuple(powerset(range(3))))
-    print(tuple(R(4)))
     print(tuple(hotbits(43)))
-    print(tuplify_nested_generator(omega2hf(123456789123456789)))
+    print(simplify(tuplify_nested_generator(omega2hf(123456789123456789))))
+    print(simplify(set(tuple(R(5))) - set(tuple(R(4)))))
 
 if __name__ == '__main__':
     test()
